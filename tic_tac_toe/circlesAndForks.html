@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main{
+            display: flex;
+            flex-wrap: wrap;
+            width: 600px;
+            height: 600px;
+            border: 1px solid black;
+            margin: 0 auto;
+        }
+        .grid{
+            width: 200px;
+            height: 200px;
+            border: 1px solid black;
+            box-sizing: border-box;
+        }
+        img{
+            position: absolute;
+            width: 200px;
+            display: none;
+        }
+        #forks{
+            display: block;
+        }
+        .Line{
+            border:5px solid greenyellow ;
+            width: 700px;
+            position: absolute;
+            z-index: 999999999;
+        }
+        #horizon{
+            top:500px;          /*100px 300px 500px*/
+            left:500px;
+            display: none;
+        }
+        #stright{
+            transform: rotate(90deg);
+            top:300px;
+            left: 700px;        /*300px 500px 700px*/
+            display: none;
+        }
+        #incline{
+            width: 900px;
+            transform: rotate(45deg);   /*135deg 45deg*/
+            top:315px;                   
+            left:410px;                  /*390px  410px*/
+            display: none;
+        }
+        button{
+            position: absolute;
+            left: 80%;
+            font-size: 24pt;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="restart()">Restart</button>
+    <img id="circle" src="./circle.png">
+    <img id="forks" src="./forks.png">
+    <div id="horizon" class="Line"></div>
+    <div id="stright" class="Line"></div>
+    <div id="incline" class="Line"></div>
+    <div class="main">
+        <div id="g1" class="grid">
+            <img id="circle1" src="./circle.png">
+            <img id="forks1" src="./forks.png">
+        </div>
+        <div id="g2" class="grid">
+            <img id="circle2" src="./circle.png">
+            <img id="forks2" src="./forks.png">
+        </div>
+        <div id="g3" class="grid">
+            <img id="circle3" src="./circle.png">
+            <img id="forks3" src="./forks.png">
+        </div>
+        <div id="g4" class="grid">
+            <img id="circle4" src="./circle.png">
+            <img id="forks4" src="./forks.png">
+        </div>
+        <div id="g5" class="grid">
+            <img id="circle5" src="./circle.png">
+            <img id="forks5" src="./forks.png">
+        </div>
+        <div id="g6" class="grid">
+            <img id="circle6" src="./circle.png">
+            <img id="forks6" src="./forks.png">
+        </div>
+        <div id="g7" class="grid">
+            <img id="circle7" src="./circle.png">
+            <img id="forks7" src="./forks.png">
+        </div>
+        <div id="g8" class="grid">
+            <img id="circle8" src="./circle.png">
+            <img id="forks8" src="./forks.png">
+        </div>
+        <div id="g9" class="grid">
+            <img id="circle9" src="./circle.png">
+            <img id="forks9" src="./forks.png">
+        </div>
+        <script>
+            const circles = [];
+            const forks = [];
+            const grid = [];
+            const circle = document.getElementById('circle');
+            const fork = document.getElementById('forks');
+            const main = document.getElementsByClassName('main')[0];
+            const horizon = document.getElementById('horizon');
+            const stright = document.getElementById('stright');
+            const incline = document.getElementById('incline');
+            let forkWin = [];
+            let circleWin = [];
+            let clicked = [];
+            let count = 0;
+            function CircleAndForks(){
+                
+                while(count < 9){
+                    circles[count+1] = document.getElementById(`circle${count+1}`);
+                    forks[count+1] = document.getElementById(`forks${count+1}`);
+                    grid[count+1] = document.getElementById(`g${count+1}`);
+                    clicked[count+1] = false;
+                    forkWin[count+1] = false; 
+                    circleWin[count+1] = false; 
+                    count++;
+                }
+                count = 0;
+                main.addEventListener('click',()=>{
+                    if(count%2 == 0){
+                        fork.style.display = 'none';
+                        circle.style.display='block';
+                    }else{
+                        fork.style.display = 'block';
+                        circle.style.display='none';
+                    }
+                    count++;
+                })
+                grid[1].addEventListener('click',()=>{
+                    if(!clicked[1]){
+                        if(count%2 !== 0){
+                            forks[1].style.display = 'none';
+                            circles[1].style.display='block';
+                            circleWin[1] = true;
+                        }else{
+                            forks[1].style.display = 'block';
+                            circles[1].style.display='none';
+                            forkWin[1] = true;
+                        }
+                        clicked[1] = true;
+                    }else{
+                        count--;
+                    }
+                })
+                grid[2].addEventListener('click',()=>{
+                    if(!clicked[2]){
+                        if(count%2 !== 0){
+                            forks[2].style.display = 'none';
+                            circles[2].style.display='block';
+                            circleWin[2] = true;
+                        }else{
+                            forks[2].style.display = 'block';
+                            circles[2].style.display='none';
+                            forkWin[2] = true;
+                        }
+                        clicked[2] = true;
+                    }else{
+                        count--;
+                    }
+                })
+                grid[3].addEventListener('click',()=>{
+                    if(!clicked[3]){
+                        if(count%2 !== 0){
+                            forks[3].style.display = 'none';
+                            circles[3].style.display='block';
+                            circleWin[3] = true;
+                        }else{
+                            forks[3].style.display = 'block';
+                            circles[3].style.display='none';
+                            forkWin[3] = true;
+                        }
+                        clicked[3] = true;
+                    }else{
+                        count--;
+                    }
+                })
+                grid[4].addEventListener('click',()=>{
+                    if(!clicked[4]){
+                        if(count%2 !== 0){
+                            forks[4].style.display = 'none';
+                            circles[4].style.display='block';
+                            circleWin[4] = true;
+                        }else{
+                            forks[4].style.display = 'block';
+                            circles[4].style.display='none';
+                            forkWin[4] = true;
+                        }
+                        clicked[4] = true;
+                    }else{
+                        count--;
+                    }
+                })
+                grid[5].addEventListener('click',()=>{
+                    if(!clicked[5]){
+                        if(count%2 !== 0){
+                            forks[5].style.display = 'none';
+                            circles[5].style.display='block';
+                            circleWin[5] = true;
+                        }else{
+                            forks[5].style.display = 'block';
+                            circles[5].style.display='none';
+                            forkWin[5] = true;
+                        }
+                        clicked[5] = true;
+                    }else{
+                        count--;
+                    }
+                })
+                grid[6].addEventListener('click',()=>{
+                    if(!clicked[6]){
+                        if(count%2 !== 0){
+                            forks[6].style.display = 'none';
+                            circles[6].style.display='block';
+                            circleWin[6] = true;
+                        }else{
+                            forks[6].style.display = 'block';
+                            circles[6].style.display='none';
+                            forkWin[6] = true;
+                        }
+                        clicked[6] = true;
+                    }else{
+                        count--;
+                    }
+                })
+                grid[7].addEventListener('click',()=>{
+                    if(!clicked[7]){
+                        if(count%2 !== 0){
+                            forks[7].style.display = 'none';
+                            circles[7].style.display='block';
+                            circleWin[7] = true;
+                        }else{
+                            forks[7].style.display = 'block';
+                            circles[7].style.display='none';
+                            forkWin[7] = true;
+                        }
+                        clicked[7] = true;
+                    }else{
+                        count--;
+                    }
+                })
+                grid[8].addEventListener('click',()=>{
+                    if(!clicked[8]){
+                        if(count%2 !== 0){
+                            forks[8].style.display = 'none';
+                            circles[8].style.display='block';
+                            circleWin[8] = true;
+                        }else{
+                            forks[8].style.display = 'block';
+                            circles[8].style.display='none';
+                            forkWin[8] = true;
+                        }
+                        clicked[8] = true;
+                    }else{
+                        count--;
+                    }
+                })
+                grid[9].addEventListener('click',()=>{
+                    if(!clicked[9]){
+                        if(count%2 !== 0){
+                            forks[9].style.display = 'none';
+                            circles[9].style.display='block';
+                            circleWin[9] = true;
+                        }else{
+                            forks[9].style.display = 'block';
+                            circles[9].style.display='none';
+                            forkWin[9] = true;
+                        }
+                        clicked[9] = true;
+                    }else{
+                        count--;
+                    }
+                })
+            }
+            function Chorizontal1(){
+                return (circleWin[1]&&circleWin[2]&&circleWin[3])?true:false;
+            }
+            function Chorizontal2(){
+                return (circleWin[4]&&circleWin[5]&&circleWin[6])?true:false;
+            }
+            function Chorizontal3(){
+                return (circleWin[7]&&circleWin[8]&&circleWin[9])?true:false;
+            }
+            function Cstraight1(){
+                return (circleWin[1]&&circleWin[4]&&circleWin[7])?true:false;
+            }
+            function Cstraight2(){
+                return (circleWin[2]&&circleWin[5]&&circleWin[8])?true:false;
+            }
+            function Cstraight3(){
+                return (circleWin[3]&&circleWin[6]&&circleWin[9])?true:false;
+            }
+            function Cincline1(){
+                return (circleWin[5]&&circleWin[1]&&circleWin[9])?true:false;
+            }
+            function Cincline2(){
+                return (circleWin[5]&&circleWin[3]&&circleWin[7])?true:false;
+            }
+            function Fhorizontal1(){
+                return (forkWin[1]&&forkWin[2]&&forkWin[3])?true:false;
+            }
+            function Fhorizontal2(){
+                return (forkWin[4]&&forkWin[5]&&forkWin[6])?true:false;
+            }
+            function Fhorizontal3(){
+                return (forkWin[7]&&forkWin[8]&&forkWin[9])?true:false;
+            }
+            function Fstraight1(){
+                return (forkWin[1]&&forkWin[4]&&forkWin[7])?true:false;
+            }
+            function Fstraight2(){
+                return (forkWin[2]&&forkWin[5]&&forkWin[8])?true:false;
+            }
+            function Fstraight3(){
+                return (forkWin[3]&&forkWin[6]&&forkWin[9])?true:false;
+            }
+            function Fincline1(){
+                return (forkWin[5]&&forkWin[1]&&forkWin[9])?true:false;
+            }
+            function Fincline2(){
+                return (forkWin[5]&&forkWin[3]&&forkWin[7])?true:false;
+            }
+            let winAnime;
+            clicked[0]=false;
+            document.addEventListener('click',()=>{
+                
+                if(Chorizontal1()||Chorizontal2()||Chorizontal3()){
+                    if(clicked[0]){
+                        return;
+                    }
+                    clicked[0]=true;
+                    var i=0;
+                    while(i < clicked.length){
+                        clicked[i] = true;
+                        i++;
+                    }
+                    if(Chorizontal1()){
+                        horizon.style.top = '100px';
+                        horizon.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (horizon.style.display == 'none')?horizon.style.display = 'block':horizon.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Chorizontal2()){
+                        horizon.style.top = '300px';
+                        horizon.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (horizon.style.display == 'none')?horizon.style.display = 'block':horizon.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Chorizontal3()){
+                        horizon.style.top = '500px';
+                        horizon.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (horizon.style.display == 'none')?horizon.style.display = 'block':horizon.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    return;
+                }
+                if(Cstraight1()||Cstraight2()||Cstraight3()){
+                    if(clicked[0]){
+                        return;
+                    }
+                    clicked[0]=true;
+                    var i=0;
+                    while(i < clicked.length){
+                        clicked[i] = true;
+                        i++;
+                    }
+                    if(Cstraight1()){
+                        stright.style.left = '300px';
+                        stright.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (stright.style.display == 'none')?stright.style.display = 'block':stright.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Cstraight2()){
+                        stright.style.left = '500px';
+                        stright.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (stright.style.display == 'none')?stright.style.display = 'block':stright.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Cstraight3()){
+                        stright.style.left = '700px';
+                        stright.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (stright.style.display == 'none')?stright.style.display = 'block':stright.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    return;
+                }
+                if(Cincline1()||Cincline2()){
+                    if(clicked[0]){
+                        return;
+                    }
+                    clicked[0]=true;
+                    var i=0;
+                    while(i < clicked.length){
+                        clicked[i] = true;
+                        i++;
+                    }
+                    if(Cincline1()){
+                        incline.style.left = '410px';
+                        incline.style.transform = 'rotate(45deg)';
+                        incline.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (incline.style.display == 'none')?incline.style.display = 'block':incline.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Cincline2()){
+                        incline.style.left = '390px';
+                        incline.style.transform = 'rotate(135deg)';
+                        incline.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (incline.style.display == 'none')?incline.style.display = 'block':incline.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    return;
+                }
+                if(Fhorizontal1()||Fhorizontal2()||Fhorizontal3()){
+                    if(clicked[0]){
+                        return;
+                    }
+                    clicked[0]=true;
+                    var i=0;
+                    while(i < clicked.length){
+                        clicked[i] = true;
+                        i++;
+                    }
+                    if(Fhorizontal1()){
+                        horizon.style.top = '100px';
+                        horizon.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (horizon.style.display == 'none')?horizon.style.display = 'block':horizon.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Fhorizontal2()){
+                        horizon.style.top = '300px';
+                        horizon.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (horizon.style.display == 'none')?horizon.style.display = 'block':horizon.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Fhorizontal3()){
+                        horizon.style.top = '500px';
+                        horizon.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (horizon.style.display == 'none')?horizon.style.display = 'block':horizon.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    return;
+                }
+                if(Fstraight1()||Fstraight2()||Fstraight3()){
+                    if(clicked[0]){
+                        return;
+                    }
+                    clicked[0]=true;
+                    var i=0;
+                    while(i < clicked.length){
+                        clicked[i] = true;
+                        i++;
+                    }
+                    if(Fstraight1()){
+                        stright.style.left = '300px';
+                        stright.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (stright.style.display == 'none')?stright.style.display = 'block':stright.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Fstraight2()){
+                        stright.style.left = '500px';
+                        stright.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (stright.style.display == 'none')?stright.style.display = 'block':stright.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Fstraight3()){
+                        stright.style.left = '700px';
+                        stright.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (stright.style.display == 'none')?stright.style.display = 'block':stright.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    return;
+                }
+                if(Fincline1()||Fincline2()){
+                    if(clicked[0]){
+                        return;
+                    }
+                    clicked[0]=true;
+                    var i=0;
+                    while(i < clicked.length){
+                        clicked[i] = true;
+                        i++;
+                    }
+                    if(Fincline1()){
+                        incline.style.left = '410px';
+                        incline.style.transform = 'rotate(45deg)';
+                        incline.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (incline.style.display == 'none')?incline.style.display = 'block':incline.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    if(Fincline2()){
+                        incline.style.left = '390px';
+                        incline.style.transform = 'rotate(135deg)';
+                        incline.style.display = 'block';
+                        winAnime = setInterval(()=>{
+                            (incline.style.display == 'none')?incline.style.display = 'block':incline.style.display = 'none';
+                        },300)
+                        return;
+                    }
+                    return;
+                }
+            })
+            function restart(){
+                clearInterval(winAnime);
+                clicked[0]=false;
+                horizon.style.display = 'none';
+                stright.style.display = 'none';
+                incline.style.display = 'none';
+                count = 0;
+                let i=0;
+                while(i < 9){
+                    forks[i+1].style.display = 'none';
+                    circles[i+1].style.display='none';
+                    clicked[i+1] = false;
+                    forkWin[i+1] = false; 
+                    circleWin[i+1] = false;
+                    i++;
+                }
+            }
+            CircleAndForks();
+        </script>
+    </div>
+</body>
+</html>
