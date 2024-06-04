@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+    <title>Document</title>
+    <link rel="stylesheet" href="./spin.css">
+</head>
+<body>
+    <div id="contlist">
+        <div id="mainList">
+            <label id="cash">餘額： <span id="totCash"></span>元</label>
+            <label id="name">Username</label>
+            <button id="logout">logout</button>
+            <button id="login">login</button>
+            <button id="addCash">AddCash</button>
+        </div>
+    </div>
+    
+    <div class="spin">
+        <div id="winnerCash">
+            <label id="lbl" style="display: block;">You Win</label>
+        </div>
+        <div id="area1" class="area">
+            <div id="slot1" class="slot"></div>
+            <div id="slot2" class="slot"></div>
+            <div id="slot3" class="slot"></div>
+        </div>
+        <div id="area2" class="area">
+            <input type="number" min="100" id="dropCash" value="100">
+            <button id="lever">Spin</button>
+        </div>
+    </div>
+    <script>
+        window.onload = function (){
+            startGame();
+        }
+        const lbl = document.getElementById('lbl');
+        const sl1 = document.getElementById('slot1');
+        const sl2 = document.getElementById('slot2');
+        const sl3 = document.getElementById('slot3');
+        const dropCash = document.getElementById('dropCash');
+        let count = 0;
+        let flyPotCash = 1000;
+        let sum = 0;
+        const icon = ['🍉','🍒','🍌','🍉','🍒','🍌','🍉','🍒','🍌','💎','💎','✈'];
+        const iconf = ['💎','💎','✈']
+        function startGame(){
+            let totCash = document.getElementById('totCash');
+            totCash.textContent = 0;
+            sum = parseInt(totCash.textContent);
+            resetVal(); 
+            
+
+            document.getElementById('lever').addEventListener('click',async ()=>{
+                if(parseInt(totCash.textContent) == 0){
+                    dropCash.value = 100
+                }else{
+                    if(dropCash.value <= sum){
+                        flyPotCash += dropCash.value*5;
+                        setMoney((dropCash.value*-1));
+                        count++;
+                        document.getElementById('lever').style.display = "none";
+                        await startRoll();
+                    }else{
+                        alert('餘額不足')
+                    }
+                }
+            })
+
+            dropCash.addEventListener('change',()=>{
+                if(dropCash.value > sum){
+                    dropCash.value = sum;
+                }
+                if(dropCash.value <= 100){
+                    dropCash.value = 100;
+                }
+            })
+        }
+        function resetVal(){
+            sum =0;
+            totCash.textContent = '0';
+            flyPotCash = 1000;
+            count = 0;
+            lbl.textContent = "JecketPot "+flyPotCash;
+            sl1.textContent = icon[0];
+            sl2.textContent = icon[0];
+            sl3.textContent = icon[0];
+        }
+        document.getElementById('addCash').addEventListener('click',()=>{
+            setMoney(1000);
+        })
+        function update(arr) {
+            sl1.textContent = arr[0];
+            sl2.textContent = arr[1];
+            sl3.textContent = arr[2];
+        }
+        function getWin(arr,count,sum){
+            document.getElementById('lever').style.display = "block";
+            let updateSum = 0;
+            if(arr[0] == arr[1] && arr[1] == arr[2]){
+                switch(arr[0]){
+                    case '🍉':
+                        updateSum = 100*count*dropCash.value*0.05;
+                        lbl.textContent = `You Win ${updateSum}`;
+                        console.log(sum);
+                        break;
+                    case '🍒':
+                        updateSum = 150*count*dropCash.value*0.05;
+                        lbl.textContent = `You Win ${updateSum}`;
+                        console.log(sum);
+                        break;
+                    case '🍌':
+                        updateSum = 50*count*dropCash.value*0.05;
+                        lbl.textContent = `You Win ${updateSum}`;
+                        console.log(sum);
+                        break;
+                    case '💎':
+                        updateSum = 500*count*dropCash.value*0.05;
+                        lbl.textContent = `You Win ${updateSum}`;
+                        console.log(sum);
+                        break;
+                    case '✈':
+                        updateSum = flyPotCash;
+                        lbl.textContent = `You Win ${updateSum}`;
+                        flyPotCash = 1000;
+                        console.log(sum);
+                        break;
+                }
+                setMoney(updateSum);
+            }else{
+                lbl.textContent = "JecketPot： "+flyPotCash;
+            }        
+            
+        }
+        function setMoney(updateSum){
+            sum += parseInt(updateSum);
+            totCash.textContent = sum.toString();
+            dropCash.step = sum*0.1;
+        }
+        async function AnimatRoll(n){
+            let ct=0;
+            let cycle1 = setInterval(()=>{
+                sl1.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+            let cycle2 = setInterval(()=>{
+                sl2.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+            let cycle3 = setInterval(()=>{
+                sl3.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+
+            setTimeout(()=>{
+                clearInterval(cycle1);
+                clearInterval(cycle2);
+                clearInterval(cycle3);
+                let arr = []
+                for(var i=0;i<3;i++){
+                    arr.push(icon[Math.floor(Math.random()*icon.length)]);
+                }
+                update(arr);
+                getWin(arr,count,sum);
+            },1000);
+            
+        }
+        async function AnimatRollf(n){
+            let ct=0;
+            let cycle1 = setInterval(()=>{
+                sl1.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+            let cycle2 = setInterval(()=>{
+                sl2.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+            let cycle3 = setInterval(()=>{
+                sl3.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+
+            setTimeout(()=>{
+                clearInterval(cycle1);
+                clearInterval(cycle2);
+                clearInterval(cycle3);
+                let arr = []
+                for(var i=0;i<3;i++){
+                    arr.push(iconf[Math.floor(Math.random()*iconf.length)]);
+                }
+                update(arr);
+                getWin(arr,count,sum);
+            },1000);
+            
+        }
+        function startRoll(){
+            if(count >= 300){
+                AnimatRollf(100);
+            }else{
+                AnimatRoll(100);
+            }
+        }
+    </script>
+</body>
+</html>

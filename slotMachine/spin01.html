@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+    <title>Document</title>
+    <link rel="stylesheet" href="./spin.css">
+</head>
+<body>
+    <div class="spin">
+        <div id="winnerCash">
+            <label id="lbl" style="display: block;">You Win</label>
+        </div>
+        <div id="area1" class="area">
+            <div id="slot1" class="slot"></div>
+            <div id="slot2" class="slot"></div>
+            <div id="slot3" class="slot"></div>
+        </div>
+        <div id="area2" class="area">
+            <input type="number" min="100" id="dropCash" value="100">
+            <button id="lever">Spin</button>
+        </div>
+    </div>
+    <script>
+        window.onload = function (){
+            startGame();
+        }
+        const lbl = document.getElementById('lbl');
+        const sl1 = document.getElementById('slot1');
+        const sl2 = document.getElementById('slot2');
+        const sl3 = document.getElementById('slot3');
+        const icon = ['🍉','🍒','🍌','🍉','🍒','🍌','🍉','🍒','🍌','💎','💎','✈'];
+        const iconf = ['💎','💎','✈']
+        function startGame(){
+            resetVal(); 
+            document.getElementById('lever').addEventListener('click',async ()=>{
+                    document.getElementById('lever').style.display = "none";
+                    await startRoll();
+            })
+        }
+        function resetVal(){
+            sl1.textContent = icon[0];
+            sl2.textContent = icon[0];
+            sl3.textContent = icon[0];
+        }
+        function update(arr) {
+            document.getElementById('lever').style.display = "block";
+            sl1.textContent = arr[0];
+            sl2.textContent = arr[1];
+            sl3.textContent = arr[2];
+        }
+        async function AnimatRoll(n){
+            let ct=0;
+            let cycle1 = setInterval(()=>{
+                sl1.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+            let cycle2 = setInterval(()=>{
+                sl2.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+            let cycle3 = setInterval(()=>{
+                sl3.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+
+            setTimeout(()=>{
+                clearInterval(cycle1);
+                clearInterval(cycle2);
+                clearInterval(cycle3);
+                let arr = []
+                for(var i=0;i<3;i++){
+                    arr.push(icon[Math.floor(Math.random()*icon.length)]);
+                }
+                update(arr);
+                getWin(arr,count,sum);
+            },1000);
+            
+        }
+        async function AnimatRollf(n){
+            let ct=0;
+            let cycle1 = setInterval(()=>{
+                sl1.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+            let cycle2 = setInterval(()=>{
+                sl2.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+            let cycle3 = setInterval(()=>{
+                sl3.textContent = icon[ct];
+                ct = Math.floor(Math.random()*icon.length);
+            },n)
+
+            setTimeout(()=>{
+                clearInterval(cycle1);
+                clearInterval(cycle2);
+                clearInterval(cycle3);
+                let arr = []
+                for(var i=0;i<3;i++){
+                    arr.push(iconf[Math.floor(Math.random()*iconf.length)]);
+                }
+                update(arr);
+            },1000);
+            
+        }
+        function startRoll(){
+            AnimatRoll(100);
+        }
+    </script>
+</body>
+</html>
